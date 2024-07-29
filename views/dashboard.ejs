@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <h2>Welcome <%= signedInUser.firstname %> <%= signedInUser.lastname %></h2>  <a href="/signin">
+        <button>Signout</button>
+    </a>
+    <h3>List of Registered Students</h3>
+    <ul>
+        <% allStudents.forEach(student => { %>
+            <li>
+                <strong>First Name:</strong> <%= student.firstname %> <br>
+                <strong>Last Name:</strong> <%= student.lastname %> <br>
+                <strong>Email:</strong> <%= student.email %> <br>
+                <strong>Registration Date:</strong> <%= student.registrationDate %> <br>
+                <form action="/delete-student/<%= student._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                <a href="/edit-student/<%= student._id %>">
+                    <button>Edit</button>
+                </a>
+                <br><br>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

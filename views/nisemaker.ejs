@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noisemaker</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+        }
+        .btn {
+            width: 25px;
+            align-self: center;
+        }
+    </style>
+</head>
+<body style="display: flex; justify-content: center; align-items: center;">
+    <div>
+        <h1>List of Noise Makers</h1>
+        <table>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>X times</th>
+                <th>Actions</th>
+            </tr>
+            <% allNoisemakers.map((noisemaker, index) => { %>
+                <tr id="noisemaker-<%= index %>">
+                    <td><%= index + 1 %></td>
+                    <td><%= noisemaker.noisemaker %></td>
+                    <td style="text-align: center;">0</td>
+                    <td style="display: flex; flex-direction: row; align-items: center;">
+                        <button class="btn">+</button>
+                        <button class="btn">-</button>
+                        <button class="btn" onclick="deleteNoisemaker(<%= index %>)">x</button>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+        <form action="/noisedashboard" method="get">
+            <button>Add Noise Makers</button>
+        </form>
+    </div>
+    <script>
+        function deleteNoisemaker(index) {
+            fetch(`/noisemaker/${index}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then(response => {
+                if (response.ok) {
+                    // Remove the row from the DOM
+                    document.getElementById(`noisemaker-${index}`).remove();
+                    
+                   
+                }
+                
+            });
+        }
+
+       
+
+        // function updateSN() {
+        //     const rows = Array.from(document.querySelectorAll("table tr")).slice(1); // Skip the header row
+        //     rows.map((row, idx) => {
+        //         row.querySelector("td:first-child").innerText = idx + 1;
+        //     });
+        // }
+    </script>
+</body>
+</html>
